@@ -14,3 +14,10 @@ public enum MusicApi {
     static let requestUrl = "https://itunes.apple.com/search?"
     static let mediaParam = "media=music"
 }
+
+//구조체의 인스턴스가 생성되지 않게 private init() {} 처리 해줘야함
+struct Cell {
+    static let musicCellIdentifier = "MusicCell"
+    
+    private init() {}
+}
