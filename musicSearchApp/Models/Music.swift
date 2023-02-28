@@ -53,6 +53,4 @@ struct Music: Codable {
         let dateString = formatter.string(from: isoDate)
         return dateString
     }
-    
-    
 }

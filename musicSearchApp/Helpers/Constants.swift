@@ -18,6 +18,12 @@ public enum MusicApi {
 //구조체의 인스턴스가 생성되지 않게 private init() {} 처리 해줘야함
 struct Cell {
     static let musicCellIdentifier = "MusicCell"
+    static let musicCollectionViewCell = "MusicCollectionViewCell"
     
     private init() {}
+}
+
+public enum CVCell {
+    static let spacingwidth: CGFloat = 1
+    static let cellColumns: CGFloat = 3
 }

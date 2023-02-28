@@ -27,13 +27,13 @@ class MusicCell: UITableViewCell {
     }
     //셀은 재사용 된다는 점을 기억해야함(메모리 효율성을 위해)
     //prepareForReuse는 셀이 재사용 되기 전에 호출되는 메서드
-    override func prepareForReuse() {
-        print(#function)
-        super.prepareForReuse()
-        // 이미지가 바뀌는 것처럼 보이는 현상을 없애기 위해서 실행하는 코드
-        // 데이터를 새로 교체하기 전에 미리 비워주는 느낌.
-        self.mainImageView = nil
-    }
+//    override func prepareForReuse() {
+//        print(#function)
+//        super.prepareForReuse()
+//        // 이미지가 바뀌는 것처럼 보이는 현상을 없애기 위해서 실행하는 코드
+//        // 데이터를 새로 교체하기 전에 미리 비워주는 느낌.
+//        self.mainImageView.image = nil
+//    }
     // 스토리보드, Nib으로 만들 때 사용하는 생성자 코드
     override func awakeFromNib() {
         super.awakeFromNib()

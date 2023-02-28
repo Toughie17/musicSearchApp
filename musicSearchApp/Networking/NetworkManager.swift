@@ -46,7 +46,7 @@ final class Networkmanager {
         
         //비동기적으로 동작하는 dataTask(일시정지 상태로 시작해서 추후 resume 해줘야함)
         
-        let task = session.dataTask(with: url) { data, response, error in
+        let task = session.dataTask(with: url) { ( data, response, error ) in
             //에러 여부 먼저 체크
             if error != nil {
                 print(error!)

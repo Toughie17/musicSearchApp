@@ -41,6 +41,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="album name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrH-Yl-adE">
                                 <rect key="frame" x="0.0" y="48.333333333333336" width="301" height="20.333333333333336"/>
+                                <accessibility key="accessibilityConfiguration" identifier="MusicCell"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -63,6 +64,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <accessibility key="accessibilityConfiguration" identifier="MusicCell"/>
             <connections>
                 <outlet property="albumNameLabel" destination="yrH-Yl-adE" id="h6A-kK-1YI"/>
                 <outlet property="artistNameLabel" destination="KG2-VD-eqK" id="C2u-SE-NBb"/>

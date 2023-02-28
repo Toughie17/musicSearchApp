@@ -18,6 +18,8 @@
 		865ECBCA29ACE46C0047A2C8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBC929ACE46C0047A2C8 /* Constants.swift */; };
 		865ECBCF29ADC7E00047A2C8 /* MusicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBCD29ADC7E00047A2C8 /* MusicCell.swift */; };
 		865ECBD029ADC7E00047A2C8 /* MusicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 865ECBCE29ADC7E00047A2C8 /* MusicCell.xib */; };
+		865ECBD229ADEF390047A2C8 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBD129ADEF390047A2C8 /* SearchResultViewController.swift */; };
+		865ECBD429AE00EC0047A2C8 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBD329AE00EC0047A2C8 /* MusicCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		865ECBC929ACE46C0047A2C8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		865ECBCD29ADC7E00047A2C8 /* MusicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCell.swift; sourceTree = "<group>"; };
 		865ECBCE29ADC7E00047A2C8 /* MusicCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicCell.xib; sourceTree = "<group>"; };
+		865ECBD129ADEF390047A2C8 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		865ECBD329AE00EC0047A2C8 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				865ECBAA29ACD15A0047A2C8 /* ViewController.swift */,
+				865ECBD129ADEF390047A2C8 /* SearchResultViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -94,6 +99,7 @@
 				865ECBAC29ACD15A0047A2C8 /* Main.storyboard */,
 				865ECBCD29ADC7E00047A2C8 /* MusicCell.swift */,
 				865ECBCE29ADC7E00047A2C8 /* MusicCell.xib */,
+				865ECBD329AE00EC0047A2C8 /* MusicCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,7 +202,9 @@
 			files = (
 				865ECBC629ACDCEC0047A2C8 /* NetworkManager.swift in Sources */,
 				865ECBAB29ACD15A0047A2C8 /* ViewController.swift in Sources */,
+				865ECBD229ADEF390047A2C8 /* SearchResultViewController.swift in Sources */,
 				865ECBCF29ADC7E00047A2C8 /* MusicCell.swift in Sources */,
+				865ECBD429AE00EC0047A2C8 /* MusicCollectionViewCell.swift in Sources */,
 				865ECBC829ACE04A0047A2C8 /* Music.swift in Sources */,
 				865ECBA729ACD15A0047A2C8 /* AppDelegate.swift in Sources */,
 				865ECBA929ACD15A0047A2C8 /* SceneDelegate.swift in Sources */,

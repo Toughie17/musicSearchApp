@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
     
     //테이블뷰 연결, -> 테이블에 올릴 셀 생성 필요
     @IBOutlet weak var musicTableView: UITableView!
     //네트워크 매니저
-    var networkManager = Networkmanager.shared
+    let networkManager = Networkmanager.shared
     // 음악 데이터
     var musicArrays: [Music] = []
     
@@ -25,9 +25,10 @@ class ViewController: UIViewController {
         setupData()
         // Do any additional setup after loading the view.
     }
-    
+
     func setupTableView() {
         musicTableView.dataSource = self
+        musicTableView.delegate = self
         // tableView cellForRowAt 메서드에서 디큐를 하기 위해서는 먼저 셀을 등록하는 과정이 필요함
         musicTableView.register(UINib(nibName: Cell.musicCellIdentifier, bundle: nil), forCellReuseIdentifier: Cell.musicCellIdentifier)
     }
@@ -35,8 +36,7 @@ class ViewController: UIViewController {
     
     //데이터 셋업
     func setupData() {
-        
-        networkManager.fetchMusic(searchTerm: "pop") { result in
+        networkManager.fetchMusic(searchTerm: "jazz") { result in
             switch result {
             case .success(let musicData):
                 //데이터 배열을 받아옴
@@ -73,6 +73,7 @@ extension ViewController: UITableViewDataSource {
         
         //cell의 imageUrl 변수에 String 값을 넘겨주면 didSet을 통해 loadImage 메서드가 실행됨. -> 셀에서 이미지 로드
         cell.imageUrl = musicArrays[indexPath.row].imageUrl
+        
         cell.songNameLabel.text = musicArrays[indexPath.row].songName
         cell.artistNameLabel.text = musicArrays[indexPath.row].artistName
         cell.albumNameLabel.text = musicArrays[indexPath.row].albumName
@@ -87,7 +88,7 @@ extension ViewController: UITableViewDelegate {
     //테이블 뷰의 높이를 유동적으로 조절할 수 있는 메서드
     // setupTableView() 메서드에서 musicTableView.rowHeight = 120 등으로 조절도 가능
     
-    func tableView(_ talbeView: UITableView heightForRowAt: indexPath: IndexPath) -> CGFloat {
+    func tableView(_ talbeView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
     // 자동으로 높이가 조절되는 코드도 있음.
