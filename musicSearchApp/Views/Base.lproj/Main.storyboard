@@ -32,6 +32,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Uwq-bF-fac"/>
+                    <connections>
+                        <outlet property="musicTableView" destination="bg4-57-Y8E" id="WWa-65-LoX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
