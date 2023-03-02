@@ -10,68 +10,79 @@ import UIKit
 class SearchResultViewController: UIViewController {
     //컬렉션뷰 연결 ->스토리보드 상에서도 Class 연결 해주기
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    //컬렉션뷰의 레이아웃을 담당하는 객체
+    // 컬렉션뷰의 레이아웃을 담당하는 객체
     let flowLayout = UICollectionViewFlowLayout()
     
+    // 네트워크 매니저 (싱글톤)
     let networkManager = Networkmanager.shared
     
+    // (음악 데이터를 다루기 위함) 빈배열로 시작
     var musicArrays: [Music] = []
     
-    //서치바에서 입력한 단어를 받아오는 변수
+    // (서치바에서) 검색을 위한 단어를 담는 변수 (전화면에서 전달받음)
     var searchTerm: String? {
         didSet {
-            setupData()
+            setupDatas()
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        //view.backgroundColor = UIColor.red.withAlphaComponent(0.5)
         view.backgroundColor = .white
         setupCollectionView()
-        setupData()
+        //setupDatas()
     }
-    
-    //현재 테이블뷰에 item이 내장되어 있기 때문에 register 절차는 필요없음.
+
     func setupCollectionView() {
-        //flowLayout 객체를 여기서 선언해줘도 됨
+        // 컬렉션뷰의 레이아웃을 담당하는 객체
+        //let flowLayout = UICollectionViewFlowLayout()
+        collectionView.register(UINib(nibName: Cell.musicCollectionViewCellIdentifier, bundle: nil), forCellWithReuseIdentifier: Cell.musicCollectionViewCellIdentifier)
+        
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
-        //컬렉션 뷰의 스크롤 방향 설정 ⭐️
+        // 컬렉션뷰의 스크롤 방향 설정
         flowLayout.scrollDirection = .vertical
         
-        //셀의 넓이 계산하기 위한 상수
-        //스크린의 넓이(UIScreen.main.bounds.width)에서 분할하는 영역을 제거하고, 셀의 개수만큼 영역을 나눠주는 방식
-        let collectionCellWidth = (UIScreen.main.bounds.width - (CVCell.spacingwidth * (CVCell.cellColumns - 1) )) / CVCell.cellColumns
+        let collectionCellWidth = (UIScreen.main.bounds.width - CVCell.spacingwidth * (CVCell.cellColumns - 1)) / CVCell.cellColumns
         
-        //아이템 사이즈 설정
         flowLayout.itemSize = CGSize(width: collectionCellWidth, height: collectionCellWidth)
-        //아이템 사이 간격 설정
+        // 아이템 사이 간격 설정
         flowLayout.minimumInteritemSpacing = CVCell.spacingwidth
+        // 아이템 위아래 사이 간격 설정
+        flowLayout.minimumLineSpacing = CVCell.spacingwidth
         
-        //컬렉션뷰의 속성에 할당
+        // 컬렉션뷰의 속성에 할당
         collectionView.collectionViewLayout = flowLayout
+        
     }
     
-    
-    func setupData() {
+    // 데이터 셋업
+    func setupDatas() {
+        // 옵셔널 바인딩
         guard let term = searchTerm else { return }
+        print("네트워킹 시작 단어 \(term)")
         
+        // (네트워킹 시작전에) 다시 빈배열로 만들기
         self.musicArrays = []
         
+        // 네트워킹 시작 (찾고자하는 단어를 가지고)
         networkManager.fetchMusic(searchTerm: term) { result in
             switch result {
-            case .success(let musicData):
-                self.musicArrays = musicData
+            case .success(let musicDatas):
+                // 결과를 배열에 담고
+                self.musicArrays = musicDatas
+                // 컬렉션뷰를 리로드 (메인쓰레드에서)
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-            case . failure(let error):
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
+    
 }
 
 extension SearchResultViewController: UICollectionViewDataSource {
@@ -80,11 +91,10 @@ extension SearchResultViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.musicCollectionViewCell, for: indexPath) as! MusicCollectionViewCell
-        cell.imageUrl = musicArrays[indexPath.row].imageUrl
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.musicCollectionViewCellIdentifier, for: indexPath) as! NewMusicCell
+        cell.imageUrl = musicArrays[indexPath.item].imageUrl
+        
         return cell
     }
-    
-    
     
 }

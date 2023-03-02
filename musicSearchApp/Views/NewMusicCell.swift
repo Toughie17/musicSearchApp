@@ -1,5 +1,5 @@
 //
-//  MusicCollectionViewCell.swift
+//  NewMusicCell.swift
 //  musicSearchApp
 //
 //  Created by KimChoonSik on 2023/02/28.
@@ -7,9 +7,14 @@
 
 import UIKit
 
-final class MusicCollectionViewCell: UICollectionViewCell {
-
+class NewMusicCell: UICollectionViewCell {
+    
     @IBOutlet weak var mainImageView: UIImageView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
     
     // 이미지 URL을 전달받는 속성
     var imageUrl: String? {
@@ -44,3 +49,5 @@ final class MusicCollectionViewCell: UICollectionViewCell {
         self.mainImageView.image = nil
     }
 }
+
+

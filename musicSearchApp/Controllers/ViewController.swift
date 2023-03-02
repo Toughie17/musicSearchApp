@@ -17,16 +17,17 @@ final class ViewController: UIViewController {
     // 음악 데이터
     var musicArrays: [Music] = []
     
+    let searchController = UISearchController(searchResultsController: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultViewController") as! SearchResultViewController)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupSearchBar()
         setupData()
-        // Do any additional setup after loading the view.
     }
 
-    func setupTableView() {
+    private func setupTableView() {
         musicTableView.dataSource = self
         musicTableView.delegate = self
         // tableView cellForRowAt 메서드에서 디큐를 하기 위해서는 먼저 셀을 등록하는 과정이 필요함
@@ -35,7 +36,7 @@ final class ViewController: UIViewController {
     
     
     //데이터 셋업
-    func setupData() {
+    private func setupData() {
         networkManager.fetchMusic(searchTerm: "jazz") { result in
             switch result {
             case .success(let musicData):
@@ -50,6 +51,20 @@ final class ViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private func setupSearchBar() {
+        self.title = "Music Search"
+        navigationItem.searchController = searchController
+        
+        //단순한 서치바를 사용한다면
+        //searchController.searchBar.delegate = self
+        
+        //서치 결과 컨트롤러 사용(복잡한 구현 가능)
+        //ex. 글자마다 검색 + 새로운 화면 보여주기 기능 등
+        searchController.searchResultsUpdater = self
+        //첫글자 대문자 방지
+        searchController.searchBar.autocapitalizationType = .none
     }
 }
 
@@ -97,3 +112,71 @@ extension ViewController: UITableViewDelegate {
     //    }
 }
 
+// 검색하는 동안 새로운 화면이 즉시 뜨는 서치바 구현
+
+extension ViewController: UISearchResultsUpdating {
+    //유저가 글자를 입력할 때마다 호출되는 메서드 -> 일반적으로 즉시 화면이 바뀌는 경우 사용
+    func updateSearchResults(for searchController: UISearchController) {
+        //글자를 치는 순간마다 다른 컬렉션 뷰를 보여주는 코드
+        let vc = searchController.searchResultsController as! SearchResultViewController
+        vc.searchTerm = searchController.searchBar.text ?? ""
+    }
+}
+
+
+
+
+
+
+
+
+
+// 🍏 단순한 서치바 확장
+//extension ViewController: UISearchBarDelegate {
+//
+//    // 유저가 글자를 입력하는 순간마다 호출되는 메서드
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//
+//        print(searchText)
+//        // 다시 빈 배열로 만들기 ⭐️
+//        self.musicArrays = []
+//
+//        // 네트워킹 시작
+//        networkManager.fetchMusic(searchTerm: searchText) { result in
+//            switch result {
+//            case .success(let musicDatas):
+//                self.musicArrays = musicDatas
+//                DispatchQueue.main.async {
+//                    self.musicTableView.reloadData()
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
+//}
+//
+//    // 검색(Search) 버튼을 눌렀을때 호출되는 메서드
+////    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+////        guard let text = searchController.searchBar.text else {
+////            return
+////        }
+////        print(text)
+////        // 다시 빈 배열로 만들기 ⭐️
+////        self.musicArrays = []
+////
+////        // 네트워킹 시작
+////        networkManager.fetchMusic(searchTerm: text) { result in
+////            switch result {
+////            case .success(let musicDatas):
+////                self.musicArrays = musicDatas
+////                DispatchQueue.main.async {
+////                    self.musicTableView.reloadData()
+////                }
+////            case .failure(let error):
+////                print(error.localizedDescription)
+////            }
+////        }
+////        self.view.endEditing(true)
+////    }
+//}

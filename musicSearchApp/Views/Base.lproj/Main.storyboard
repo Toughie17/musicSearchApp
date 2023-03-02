@@ -44,8 +44,8 @@
         <!--Search Result View Controller-->
         <scene sceneID="aOR-HF-9CC">
             <objects>
-                <viewController id="vLy-ZY-rxN" customClass="SearchResultViewController" customModule="musicSearchApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="r45-Mh-xd3" customClass="Search">
+                <viewController storyboardIdentifier="SearchResultViewController" id="vLy-ZY-rxN" customClass="SearchResultViewController" customModule="musicSearchApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="r45-Mh-xd3" customClass="View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -78,7 +78,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <outlet property="mainImageView" destination="w7M-OF-5On" id="bZc-L2-WQq"/>
+                                            <outlet property="mainImageView" destination="w7M-OF-5On" id="fpg-Gz-Xzb"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -86,6 +86,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="glM-uf-4xc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="SearchResultViewController"/>
                         <constraints>
                             <constraint firstItem="oJF-Bb-Hga" firstAttribute="leading" secondItem="glM-uf-4xc" secondAttribute="leading" id="1mI-gW-xub"/>
                             <constraint firstItem="oJF-Bb-Hga" firstAttribute="top" secondItem="glM-uf-4xc" secondAttribute="top" id="CH1-ys-6iV"/>
