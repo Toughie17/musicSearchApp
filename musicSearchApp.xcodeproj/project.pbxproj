@@ -18,10 +18,14 @@
 		865ECBCA29ACE46C0047A2C8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBC929ACE46C0047A2C8 /* Constants.swift */; };
 		865ECBCF29ADC7E00047A2C8 /* MusicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBCD29ADC7E00047A2C8 /* MusicCell.swift */; };
 		865ECBD029ADC7E00047A2C8 /* MusicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 865ECBCE29ADC7E00047A2C8 /* MusicCell.xib */; };
-		865ECBD229ADEF390047A2C8 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBD129ADEF390047A2C8 /* SearchResultViewController.swift */; };
-		865ECBD429AE00EC0047A2C8 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBD329AE00EC0047A2C8 /* MusicCollectionViewCell.swift */; };
-		865ECBD729AE2FB30047A2C8 /* NewMusicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865ECBD529AE2FB30047A2C8 /* NewMusicCell.swift */; };
-		865ECBD829AE2FB30047A2C8 /* NewMusicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 865ECBD629AE2FB30047A2C8 /* NewMusicCell.xib */; };
+		86C98D7629BDC705000502B9 /* SavedMusic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86C98D7429BDC705000502B9 /* SavedMusic.xcdatamodeld */; };
+		86C98D7929BDC760000502B9 /* MusicSaved+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C98D7729BDC760000502B9 /* MusicSaved+CoreDataClass.swift */; };
+		86C98D7A29BDC760000502B9 /* MusicSaved+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C98D7829BDC760000502B9 /* MusicSaved+CoreDataProperties.swift */; };
+		86C98D7C29BDD711000502B9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C98D7B29BDD711000502B9 /* CoreDataManager.swift */; };
+		86C98D7E29BDD78A000502B9 /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C98D7D29BDD78A000502B9 /* MusicManager.swift */; };
+		86C98D8129BDE902000502B9 /* SavedMusicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C98D7F29BDE902000502B9 /* SavedMusicCell.swift */; };
+		86C98D8229BDE902000502B9 /* SavedMusicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86C98D8029BDE902000502B9 /* SavedMusicCell.xib */; };
+		86D22C5629BDF35100593740 /* SavedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D22C5529BDF35100593740 /* SavedListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,10 +42,14 @@
 		865ECBC929ACE46C0047A2C8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		865ECBCD29ADC7E00047A2C8 /* MusicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCell.swift; sourceTree = "<group>"; };
 		865ECBCE29ADC7E00047A2C8 /* MusicCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicCell.xib; sourceTree = "<group>"; };
-		865ECBD129ADEF390047A2C8 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
-		865ECBD329AE00EC0047A2C8 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
-		865ECBD529AE2FB30047A2C8 /* NewMusicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMusicCell.swift; sourceTree = "<group>"; };
-		865ECBD629AE2FB30047A2C8 /* NewMusicCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMusicCell.xib; sourceTree = "<group>"; };
+		86C98D7529BDC705000502B9 /* SavedMusic.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SavedMusic.xcdatamodel; sourceTree = "<group>"; };
+		86C98D7729BDC760000502B9 /* MusicSaved+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MusicSaved+CoreDataClass.swift"; sourceTree = "<group>"; };
+		86C98D7829BDC760000502B9 /* MusicSaved+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MusicSaved+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		86C98D7B29BDD711000502B9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		86C98D7D29BDD78A000502B9 /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
+		86C98D7F29BDE902000502B9 /* SavedMusicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMusicCell.swift; sourceTree = "<group>"; };
+		86C98D8029BDE902000502B9 /* SavedMusicCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedMusicCell.xib; sourceTree = "<group>"; };
+		86D22C5529BDF35100593740 /* SavedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +92,7 @@
 				865ECBAF29ACD15C0047A2C8 /* Assets.xcassets */,
 				865ECBB129ACD15C0047A2C8 /* LaunchScreen.storyboard */,
 				865ECBB429ACD15C0047A2C8 /* Info.plist */,
+				86C98D7429BDC705000502B9 /* SavedMusic.xcdatamodeld */,
 			);
 			path = musicSearchApp;
 			sourceTree = "<group>";
@@ -92,7 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				865ECBAA29ACD15A0047A2C8 /* ViewController.swift */,
-				865ECBD129ADEF390047A2C8 /* SearchResultViewController.swift */,
+				86D22C5529BDF35100593740 /* SavedListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -103,9 +112,8 @@
 				865ECBAC29ACD15A0047A2C8 /* Main.storyboard */,
 				865ECBCD29ADC7E00047A2C8 /* MusicCell.swift */,
 				865ECBCE29ADC7E00047A2C8 /* MusicCell.xib */,
-				865ECBD329AE00EC0047A2C8 /* MusicCollectionViewCell.swift */,
-				865ECBD529AE2FB30047A2C8 /* NewMusicCell.swift */,
-				865ECBD629AE2FB30047A2C8 /* NewMusicCell.xib */,
+				86C98D7F29BDE902000502B9 /* SavedMusicCell.swift */,
+				86C98D8029BDE902000502B9 /* SavedMusicCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -113,7 +121,11 @@
 		865ECBC229ACDBA00047A2C8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				86C98D7729BDC760000502B9 /* MusicSaved+CoreDataClass.swift */,
+				86C98D7829BDC760000502B9 /* MusicSaved+CoreDataProperties.swift */,
 				865ECBC729ACE04A0047A2C8 /* Music.swift */,
+				86C98D7D29BDD78A000502B9 /* MusicManager.swift */,
+				86C98D7B29BDD711000502B9 /* CoreDataManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -194,7 +206,7 @@
 			files = (
 				865ECBB329ACD15C0047A2C8 /* LaunchScreen.storyboard in Resources */,
 				865ECBB029ACD15C0047A2C8 /* Assets.xcassets in Resources */,
-				865ECBD829AE2FB30047A2C8 /* NewMusicCell.xib in Resources */,
+				86C98D8229BDE902000502B9 /* SavedMusicCell.xib in Resources */,
 				865ECBAE29ACD15A0047A2C8 /* Main.storyboard in Resources */,
 				865ECBD029ADC7E00047A2C8 /* MusicCell.xib in Resources */,
 			);
@@ -208,14 +220,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				865ECBC629ACDCEC0047A2C8 /* NetworkManager.swift in Sources */,
+				86C98D7929BDC760000502B9 /* MusicSaved+CoreDataClass.swift in Sources */,
+				86C98D7629BDC705000502B9 /* SavedMusic.xcdatamodeld in Sources */,
 				865ECBAB29ACD15A0047A2C8 /* ViewController.swift in Sources */,
-				865ECBD229ADEF390047A2C8 /* SearchResultViewController.swift in Sources */,
+				86D22C5629BDF35100593740 /* SavedListViewController.swift in Sources */,
 				865ECBCF29ADC7E00047A2C8 /* MusicCell.swift in Sources */,
-				865ECBD429AE00EC0047A2C8 /* MusicCollectionViewCell.swift in Sources */,
+				86C98D7E29BDD78A000502B9 /* MusicManager.swift in Sources */,
 				865ECBC829ACE04A0047A2C8 /* Music.swift in Sources */,
-				865ECBD729AE2FB30047A2C8 /* NewMusicCell.swift in Sources */,
+				86C98D8129BDE902000502B9 /* SavedMusicCell.swift in Sources */,
 				865ECBA729ACD15A0047A2C8 /* AppDelegate.swift in Sources */,
 				865ECBA929ACD15A0047A2C8 /* SceneDelegate.swift in Sources */,
+				86C98D7A29BDC760000502B9 /* MusicSaved+CoreDataProperties.swift in Sources */,
+				86C98D7C29BDD711000502B9 /* CoreDataManager.swift in Sources */,
 				865ECBCA29ACE46C0047A2C8 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,7 +393,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.byungjun.musicSearchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.byungjun.musicSearch-update";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -409,7 +425,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.byungjun.musicSearchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.byungjun.musicSearch-update";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -442,6 +458,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		86C98D7429BDC705000502B9 /* SavedMusic.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				86C98D7529BDC705000502B9 /* SavedMusic.xcdatamodel */,
+			);
+			currentVersion = 86C98D7529BDC705000502B9 /* SavedMusic.xcdatamodel */;
+			path = SavedMusic.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 865ECB9B29ACD15A0047A2C8 /* Project object */;
 }

@@ -1,182 +1,196 @@
 //
 //  ViewController.swift
-//  musicSearchApp
+//  MusicApp
 //
-//  Created by KimChoonSik on 2023/02/27.
+//  Created by Allen H on 2022/04/20.
 //
 
 import UIKit
 
 final class ViewController: UIViewController {
-
     
-    //테이블뷰 연결, -> 테이블에 올릴 셀 생성 필요
+    // 서치 컨트롤러 생성 ===> 네비게이션 아이템에 할당
+    let searchController = UISearchController()
+    
     @IBOutlet weak var musicTableView: UITableView!
-    //네트워크 매니저
-    let networkManager = Networkmanager.shared
-    // 음악 데이터
-    var musicArrays: [Music] = []
     
-    let searchController = UISearchController(searchResultsController: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultViewController") as! SearchResultViewController)
-    
+    // 음악 관리하는 매니저 (싱글톤) 아예 음악을 전체 관리하는 것으로 대체 ⭐️
+    let musicManager = MusicManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
+        
+        setupNaviBar()
         setupSearchBar()
-        setupData()
+        setupTableView()
+        setupDatas()
     }
-
-    private func setupTableView() {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        musicTableView.reloadData()
+    }
+    
+    func setupNaviBar() {
+        self.title = "Music Search"
+    }
+    
+    // 서치바 셋팅
+    func setupSearchBar() {
+        // 네비게이션 아이템에 할당
+        navigationItem.searchController = searchController
+        
+        // 서치바의 사용
+        searchController.searchBar.delegate = self
+    }
+    
+    // 테이블뷰 셋팅
+    func setupTableView() {
         musicTableView.dataSource = self
         musicTableView.delegate = self
-        // tableView cellForRowAt 메서드에서 디큐를 하기 위해서는 먼저 셀을 등록하는 과정이 필요함
+        // Nib파일을 사용한다면 등록의 과정이 필요
         musicTableView.register(UINib(nibName: Cell.musicCellIdentifier, bundle: nil), forCellReuseIdentifier: Cell.musicCellIdentifier)
     }
     
-    
-    //데이터 셋업
-    private func setupData() {
-        networkManager.fetchMusic(searchTerm: "jazz") { result in
-            switch result {
-            case .success(let musicData):
-                //데이터 배열을 받아옴
-                self.musicArrays = musicData
-                // 테이블 뷰를 리로드 해줘야함(새로운 데이터를 활용해)
-                // 뷰를 그리는 행동이기 때문에 메인 스레드에서 실행 해줘야함
-                DispatchQueue.main.async {
-                    self.musicTableView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
+    // 데이터 셋업하면 테이블뷰 리로드
+    func setupDatas() {
+        musicManager.setupDatasFromAPI {
+            // 서버에서 데이터 다 가지고 온 다음에 테이블뷰 리로드
+            DispatchQueue.main.async {
+                self.musicTableView.reloadData()
             }
         }
-    }
-    
-    private func setupSearchBar() {
-        self.title = "Music Search"
-        navigationItem.searchController = searchController
-        
-        //단순한 서치바를 사용한다면
-        //searchController.searchBar.delegate = self
-        
-        //서치 결과 컨트롤러 사용(복잡한 구현 가능)
-        //ex. 글자마다 검색 + 새로운 화면 보여주기 기능 등
-        searchController.searchResultsUpdater = self
-        //첫글자 대문자 방지
-        searchController.searchBar.autocapitalizationType = .none
     }
 }
 
 extension ViewController: UITableViewDataSource {
-    //테이블 뷰에 몇개의 로우가 필요한지(섹션 안에)_ 지금은 따로 섹션을 나누지 않았음
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.musicArrays.count
+        return self.musicManager.getMusicArraysFromAPI().count
     }
     
-    //called by the table view's data source to get a cell that will be displayed at a specific index path of the table view.
-    
-    // indexPath: An instance of IndexPath that represents the location of the cell in the table view. 테이블 뷰에서 셀의 위치 (섹션, 로우)
-    // The indexPath parameter contains both the section and row index for the cell.
-    
-    //테이블뷰 셀은 힙 메모리에 저장되어 있고, 이들은 재사용됨
-    // 이미지를 직접 테이블뷰 세팅 메서드에서 할당하는 설계는 빠르게 스크롤 할 때 이미지가 잘못 표기되는 부작용을 야기할 수 있음.
-    // 따라서 String값을 받아 셀에서 로딩하는 방식으로 설계함.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //등록해둔 셀을 dequeue방식으로 사용, 해당 셀의 타입으로 타입캐스팅도 해줘야힘
         let cell = musicTableView.dequeueReusableCell(withIdentifier: Cell.musicCellIdentifier, for: indexPath) as! MusicCell
         
-        //cell의 imageUrl 변수에 String 값을 넘겨주면 didSet을 통해 loadImage 메서드가 실행됨. -> 셀에서 이미지 로드
-        cell.imageUrl = musicArrays[indexPath.row].imageUrl
+        // 모델에서 받아온 데이터 전달
+        let music = musicManager.getMusicArraysFromAPI()[indexPath.row]
+        cell.music = music
         
-        cell.songNameLabel.text = musicArrays[indexPath.row].songName
-        cell.artistNameLabel.text = musicArrays[indexPath.row].artistName
-        cell.albumNameLabel.text = musicArrays[indexPath.row].albumName
-        cell.releaseDateLabel.text = musicArrays[indexPath.row].releaseDateString
-        
+        // (델리게이트 말고) 클로저 방식을 활용하는 것도 가능 ⭐️⭐️
+        cell.saveButtonPressed = { [weak self] (senderCell, isSaved) in
+            guard let self = self else { return }
+            // 저장이 안되어 있던 것이면⭐️
+            if !isSaved {
+                // 저장하려는 알럿메세지 띄우기
+                self.makeMessegeAlert { text, savedAction in
+                    // 저장함(확인) 선택하면
+                    if savedAction {
+                        self.musicManager.saveMusicData(with: music, messege: text) {
+                            print("데이터 저장 하는 중⭐️")
+                            // 저장여부 설정 및 버튼 스타일 바꾸기(셀이 음악 가지고 있음)
+                            senderCell.music?.isSaved = true
+                            // 저장 여부 바뀌었으니, 버튼 재설정
+                            senderCell.setButtonStatus()
+                            print("\(self.musicManager.getMusicDatasFromCoreData().count)⭐️")
+                            print("저장됨")
+                        }
+                    } else {
+                        print("취소됨")
+                    }
+                }
+            // 이미 저장이 되어 있던 것이면
+            } else {
+                // 정말 지울 것인지를 묻는 알럿메세지 띄우기
+                self.makeRemoveCheckAlert { removeAction in
+                    if removeAction {
+                        self.musicManager.deleteMusic(with: music) {
+                            senderCell.music?.isSaved = false
+                            // 저장 여부 바뀌었으니, 버튼 재설정
+                            senderCell.setButtonStatus()
+                            print("저장된 것 삭제")
+                        }
+                    } else {
+                        print("저장된 것 삭제하기 취소됨")
+                    }
+                }
+            }
+        }
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func makeMessegeAlert(completion: @escaping (String?, Bool) -> Void) {
+        let alert = UIAlertController(title: "음악 관련 메세지", message: "음악과 함께 저장하려는 문장을 입력하세요.", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "저장하려는 메세지"
+        }
+        var savedText: String? = ""
+        let ok = UIAlertAction(title: "확인", style: .default) { okAction in
+            savedText = alert.textFields?[0].text
+            completion(savedText, true)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
+            completion(nil, false)
+        }
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func makeRemoveCheckAlert(completion: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: "저장 음악 삭제", message: "정말 저장된 음악을 지우시겠습니까?", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default) { okAction in
+            completion(true)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
+            completion(false)
+        }
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
 extension ViewController: UITableViewDelegate {
-    //테이블 뷰의 높이를 유동적으로 조절할 수 있는 메서드
-    // setupTableView() 메서드에서 musicTableView.rowHeight = 120 등으로 조절도 가능
-    
-    func tableView(_ talbeView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    // 테이블뷰 셀의 높이를 유동적으로 조절하고 싶다면 구현할 수 있는 메서드
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
-    // 자동으로 높이가 조절되는 코드도 있음.
-    //    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return UITableView.automaticDimension
-    //    }
-}
-
-// 검색하는 동안 새로운 화면이 즉시 뜨는 서치바 구현
-
-extension ViewController: UISearchResultsUpdating {
-    //유저가 글자를 입력할 때마다 호출되는 메서드 -> 일반적으로 즉시 화면이 바뀌는 경우 사용
-    func updateSearchResults(for searchController: UISearchController) {
-        //글자를 치는 순간마다 다른 컬렉션 뷰를 보여주는 코드
-        let vc = searchController.searchResultsController as! SearchResultViewController
-        vc.searchTerm = searchController.searchBar.text ?? ""
+    
+    // 유저가 스크롤하는 것이 끝나려는 시점에 호출되는 메서드
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        UIView.animate(withDuration: 0.3) {
+            guard velocity.y != 0 else { return }
+            if velocity.y < 0 {
+                let height = self.tabBarController?.tabBar.frame.height ?? 0.0
+                self.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - height)
+            } else {
+                self.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+            }
+        }
     }
 }
 
 
+//MARK: - (단순) 서치바 확장
 
+extension ViewController: UISearchBarDelegate {
+    
+    // 검색(Search) 버튼을 눌렀을때 호출되는 메서드
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchController.searchBar.text?.lowercased() else {
+            return
+        }
+        print(text)
+        musicManager.fetchDatasFromAPI(withATerm: text) {
+            DispatchQueue.main.async {
+                self.musicTableView.reloadData()
+            }
+        }
+    }
+    
+    // 서치바에서 글자가 바뀔때마다 가져다가 소문자로 변환하기 (대문자 입력 막기)
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchBar.text = searchText.lowercased()
+    }
+}
 
-
-
-
-
-
-// 🍏 단순한 서치바 확장
-//extension ViewController: UISearchBarDelegate {
-//
-//    // 유저가 글자를 입력하는 순간마다 호출되는 메서드
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//
-//        print(searchText)
-//        // 다시 빈 배열로 만들기 ⭐️
-//        self.musicArrays = []
-//
-//        // 네트워킹 시작
-//        networkManager.fetchMusic(searchTerm: searchText) { result in
-//            switch result {
-//            case .success(let musicDatas):
-//                self.musicArrays = musicDatas
-//                DispatchQueue.main.async {
-//                    self.musicTableView.reloadData()
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
-//}
-//
-//    // 검색(Search) 버튼을 눌렀을때 호출되는 메서드
-////    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-////        guard let text = searchController.searchBar.text else {
-////            return
-////        }
-////        print(text)
-////        // 다시 빈 배열로 만들기 ⭐️
-////        self.musicArrays = []
-////
-////        // 네트워킹 시작
-////        networkManager.fetchMusic(searchTerm: text) { result in
-////            switch result {
-////            case .success(let musicDatas):
-////                self.musicArrays = musicDatas
-////                DispatchQueue.main.async {
-////                    self.musicTableView.reloadData()
-////                }
-////            case .failure(let error):
-////                print(error.localizedDescription)
-////            }
-////        }
-////        self.view.endEditing(true)
-////    }
-//}

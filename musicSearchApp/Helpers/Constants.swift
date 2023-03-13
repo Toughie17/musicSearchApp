@@ -18,7 +18,7 @@ public enum MusicApi {
 //구조체의 인스턴스가 생성되지 않게 private init() {} 처리 해줘야함
 struct Cell {
     static let musicCellIdentifier = "MusicCell"
-    static let musicCollectionViewCellIdentifier = "NewMusicCell"
+    static let savedMusicCellIdentifier = "SavedMusicCell"
     private init() {}
 }
 
